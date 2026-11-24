@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sostieni EcoCiotola - Donazioni</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ==========================================================================
+           STILE PAGINA DONAZIONI (Vibe "Tech for Good")
+           ========================================================================== */
+        
+        /* Banner Header */
+        .panoramic-box {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 40px;
+        }
+        .panoramic-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.5) contrast(1.1);
+        }
+        .panoramic-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 90%;
+            color: white;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Container Principale Donazione */
+        .donation-dashboard {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Progress Bar Obiettivo Mensile */
+        .goal-section {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid var(--secondary-color, #27AE60);
+        }
+        .goal-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--text-color, #E2E8F0);
+        }
+        .progress-track {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color, #2D9CDB), var(--secondary-color, #27AE60));
+            width: 0%; /* Partenza a 0 per animazione JS */
+            border-radius: 10px;
+            transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+        }
+
+        /* Pulsanti Importo */
+        .amount-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        .amount-btn {
+            background: rgba(128, 128, 128, 0.15);
+            border: 2px solid transparent;
+            color: var(--text-color);
+            padding: 20px 10px;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .amount-btn:hover {
+            background: rgba(128, 128, 128, 0.25);
+            transform: translateY(-3px);
+        }
+        .amount-btn.active {
+            background: rgba(45, 156, 219, 0.1);
+            border-color: var(--accent-color, #2D9CDB);
+            color: var(--accent-color, #2D9CDB);
+            box-shadow: 0 10px 25px rgba(45, 156, 219, 0.2);
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        /* Slider Custom Amount (Nascosto di default) */
+        .custom-amount-wrapper {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+            animation: fadeInDown 0.4s ease forwards;
+        }
+        .custom-input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        .custom-slider {
+            width: 100%;
+            accent-color: var(--accent-color);
+            cursor: pointer;
+        }
+
+        /* Messaggio Impatto */
+        .impact-message {
+            text-align: center;
+            font-size: 1.1rem;
+            padding: 20px;
+            background: rgba(45, 156, 219, 0.05);
+            border-radius: 15px;
+            border: 1px dashed rgba(45, 156, 219, 0.3);
+            color: var(--text-color);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .impact-highlight {
+            color: var(--secondary-color, #27AE60);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        /* Pulsante Dona Ora */
+        .donate-submit-btn {
+            background: linear-gradient(135deg, var(--accent-color, #2D9CDB), #1f7ab0);
+            color: white;
+            border: none;
+            padding: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(45, 156, 219, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .donate-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(45, 156, 219, 0.6);
+            filter: brightness(1.1);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .amount-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-transition-overlay"></div>
+    
+    <nav class="subpage-nav">
+        <a href="index.html" class="back-btn">&larr; Torna alla Home</a>
+        <span class="nav-page-title">Sostieni il Progetto</span>
+    </nav>
+
+    <main class="container subpage-content" style="padding-top: 20px;">
+        
+        <section class="panoramic-box">
+            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=1200" alt="Cani salvati e accuditi">
+            <div class="panoramic-text">
+                <h1 style="font-size: 3rem; margin-bottom: 10px;">Sostieni EcoCiotola</h1>
+                <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; color: #ddd;">
+                    Trasforma lo spreco in speranza. Ogni contributo finanzia la nostra logistica per portare cibo sano ai rifugi in difficoltà.
+                </p>
+            </div>
+        </section>
+
+        <section class="donation-dashboard">
+            
+            <div class="goal-section">
+                <div class="goal-stats">
+                    <span>Obiettivo Mensile Logistica</span>
+                    <span>1.250€ / 2.000€</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="goalBar"></div>
+                </div>
+                <p style="font-size: 0.85rem; color: #888; margin-top: 8px; text-align: center;">
+                    Siamo al 62% del budget necessario per mantenere i furgoni attivi questo mese!
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-bottom: -10px;">
+                <h3 style="font-size: 1.5rem; color: var(--text-color);">Seleziona l'importo</h3>
+            </div>
+
+            <div class="amount-grid" id="amountGrid">
+                <button class="amount-btn active" data-amount="5" data-impact="garantisci il trasporto sicuro di <span class='impact-highlight'>15 Kg</span> di eccedenze alimentari.">5€</button>
+                <button class="amount-btn" data-amount="15" data-impact="acquisti <span class='impact-highlight'>1 Box Termico</span> sanificabile per la nostra flotta.">15€</button>
+                <button class="amount-btn" data-amount="50" data-impact="copri i costi di <span class='impact-highlight'>carburante per 1 settimana</span> di ritiri.">50€</button>
+                <button class="amount-btn" data-amount="custom" data-impact="scegli tu quanto donare. Ogni euro fa la differenza!">Altro</button>
+            </div>
+
+            <div class="custom-amount-wrapper" id="customAmountSection">
+                <div class="custom-input-group">
+                    <span>€</span>
+                    <span id="customValueDisplay">100</span>
+                </div>
+                <input type="range" min="1" max="500" value="100" class="custom-slider" id="customSlider">
+            </div>
+
+            <div class="impact-message" id="impactBox">
+                Con 5€ garantisci il trasporto sicuro di <span class='impact-highlight'>15 Kg</span> di eccedenze alimentari.
+            </div>
+
+            <button class="donate-submit-btn" onclick="processDonation()">Dona Ora ❤️</button>
+            
+            <div style="text-align: center; font-size: 0.8rem; color: #666; margin-top: -10px;">
+                Transazione sicura e crittografata. EcoCiotola non memorizza i dati della tua carta.
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // SCRIPT SPECIFICO PER LA PAGINA DONAZIONI
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // 1. Animazione Barra Obiettivo all'avvio
+            setTimeout(() => {
+                document.getElementById('goalBar').style.width = '62%';
+            }, 300);
+
+            // 2. Gestione Pulsanti Importo
+            const amountBtns = document.querySelectorAll('.amount-btn');
+            const impactBox = document.getElementById('impactBox');
+            const customSection = document.getElementById('customAmountSection');
+            const customSlider = document.getElementById('customSlider');
+            const customDisplay = document.getElementById('customValueDisplay');
+
+            let currentAmount = 5;
+
+            amountBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    // Rimuovi active da tutti
+                    amountBtns.forEach(b => b.classList.remove('active'));
+                    // Aggiungi active al cliccato
+                    e.target.classList.add('active');
+
+                    const amount = e.target.getAttribute('data-amount');
+                    const impactText = e.target.getAttribute('data-impact');
+
+                    if (amount === 'custom') {
+                        customSection.style.display = 'flex';
+                        currentAmount = customSlider.value;
+                        updateCustomImpact(currentAmount);
+                    } else {
+                        customSection.style.display = 'none';
+                        currentAmount = amount;
+                        // Anima il testo in entrata
+                        impactBox.style.opacity = '0';
+                        setTimeout(() => {
+                            impactBox.innerHTML = `Con ${amount}€ ${impactText}`;
+                            impactBox.style.opacity = '1';
+                        }, 200);
+                    }
+                });
+            });
+
+            // 3. Gestione Slider Personalizzato
+            customSlider.addEventListener('input', (e) => {
+                currentAmount = e.target.value;
+                customDisplay.innerText = currentAmount;
+                updateCustomImpact(currentAmount);
+            });
+
+            function updateCustomImpact(val) {
+                let text = "";
+                if(val < 10) text = `finanzi il trasporto di <span class='impact-highlight'>${val * 3} Kg</span> di cibo.`;
+                else if(val < 30) text = `acquisti <span class='impact-highlight'>${Math.floor(val/15)} Box Termici</span>.`;
+                else text = `sostieni <span class='impact-highlight'>enormemente</span> la nostra logistica coprendo costi fissi importanti!`;
+                
+                impactBox.innerHTML = `Con ${val}€ ${text}`;
+            }
+        });
+
+        // Simulazione Click su Dona
+        function processDonation() {
+            const btn = document.querySelector('.donate-submit-btn');
+            btn.innerHTML = "Reindirizzamento... ⏳";
+            btn.style.background = "var(--secondary-color)";
+            
+            setTimeout(() => {
+                alert("Grazie per aver supportato EcoCiotola! (Questa è una demo per SellaLab)");
+                btn.innerHTML = "Dona Ora ❤️";
+                btn.style.background = "";
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

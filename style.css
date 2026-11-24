@@ -1,0 +1,992 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Tema Scuro (default) */
+    --bg-principal: #0F172A;
+    --bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1' viewBox='0 0 100 18'%3E%3Cpath fill='%23ffffff' fill-opacity='0.05' d='M61.82 18c3.47-1.45 6.86-3.78 11.3-7.34C78 6.76 80.34 5.1 83.87 3.42 88.56 1.16 93.75 0 100 0v6.16C98.76 6.05 97.43 6 96 6c-9.59 0-14.23 2.23-23.13 9.34-1.28 1.03-2.39 1.9-3.4 2.66h-7.65zm-23.64 0H22.52c-1-.76-2.1-1.63-3.4-2.66C10.23 8.23 5.59 6 0 6V0c6.25 0 11.44 1.16 16.13 3.42 3.53 1.68 5.87 3.35 10.75 7.24 4.45 3.56 7.84 5.9 11.31 7.34zM61.82 0h7.66a39.57 39.57 0 0 1-7.34 4.58C57.44 6.84 52.25 8 46 8S34.56 6.84 29.87 4.58A39.57 39.57 0 0 1 22.52 0h7.66c1.2.8 2.54 1.53 4.07 2.2C38.08 4.1 41.9 5 46 5c4.1 0 7.92-.9 11.75-2.8 1.53-.68 2.87-1.4 4.07-2.2z'/%3E%3C/svg%3E");
+    --bg-card: #1a2847;
+    --text-main: #FFFFFF;
+    --text-title: #FFFFFF;
+    --text-muted: #E8E8E8;
+    --accent-color: #2D9CDB;
+    --accent-glow: rgba(230, 0, 38, 0.4);
+    --accent-glow-inset: rgba(230, 0, 38, 0.1);
+    --border-card: rgba(230, 0, 38, 0.2);
+}
+
+[data-theme="light"] {
+    --bg-principal: #f7f7f9;
+    /* Onde geometriche ricalibrate per essere più visibili */
+    --bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1' viewBox='0 0 100 18'%3E%3Cpath fill='%23000000' fill-opacity='0.1' d='M61.82 18c3.47-1.45 6.86-3.78 11.3-7.34C78 6.76 80.34 5.1 83.87 3.42 88.56 1.16 93.75 0 100 0v6.16C98.76 6.05 97.43 6 96 6c-9.59 0-14.23 2.23-23.13 9.34-1.28 1.03-2.39 1.9-3.4 2.66h-7.65zm-23.64 0H22.52c-1-.76-2.1-1.63-3.4-2.66C10.23 8.23 5.59 6 0 6V0c6.25 0 11.44 1.16 16.13 3.42 3.53 1.68 5.87 3.35 10.75 7.24 4.45 3.56 7.84 5.9 11.31 7.34zM61.82 0h7.66a39.57 39.57 0 0 1-7.34 4.58C57.44 6.84 52.25 8 46 8S34.56 6.84 29.87 4.58A39.57 39.57 0 0 1 22.52 0h7.66c1.2.8 2.54 1.53 4.07 2.2C38.08 4.1 41.9 5 46 5c4.1 0 7.92-.9 11.75-2.8 1.53-.68 2.87-1.4 4.07-2.2z'/%3E%3C/svg%3E");
+    --bg-card: #ffffff;
+    --text-main: #2d2d30;
+    --text-title: #1c1c1e;
+    --text-muted: #1c1c1e;
+    --accent-color: #1c1c1e;
+    --accent-glow: rgba(230, 0, 38, 0.4);
+    --accent-glow-inset: rgba(230, 0, 38, 0.1);
+    --border-card: rgba(230, 0, 38, 0.2);
+}
+
+body {
+    /* Verdana per tutto il sito */
+    font-family: Verdana, -apple-system, sans-serif;
+    background-color: var(--bg-principal);
+    background-image: var(--bg-pattern);
+    color: var(--text-main);
+    line-height: 1.7;
+    transition: background-color 0.5s ease, color 0.5s ease, background-image 0.5s ease;
+}
+
+/* Regola generale per i titoli con Verdana */
+h1, h2, h3, h4 {
+    font-family: Verdana, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Tocco di classe per il titolo della Hero e i titoli delle schede */
+.hero h1 {
+    font-size: 3.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.card h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--text-title);
+    transition: color 0.5s ease;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.text-center { 
+    text-align: center; 
+    margin-bottom: 50px; 
+    color: var(--text-title); 
+    transition: color 0.5s ease;
+}
+
+.hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.85)), url('interior.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    padding: 120px 20px;
+    text-align: center;
+    border-bottom: 2px solid var(--accent-color);
+    transition: border-color 0.5s ease;
+}
+
+/* Banner Hero */
+.banner-hero {
+    padding: 80px 20px;
+    background: url('image.png') calc(50% - 8px) calc(30% + 3px) / cover no-repeat;
+    text-align: center;
+    border-bottom: 3px solid var(--accent-color);
+    transition: border-color 0.5s ease;
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55));
+    z-index: 1;
+}
+
+.banner-hero-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.banner-logo-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+.banner-logo {
+    max-width: 450px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(45, 156, 219, 0.3));
+    transition: filter 0.3s ease;
+}
+
+.banner-logo:hover {
+    filter: drop-shadow(0 6px 16px rgba(45, 156, 219, 0.5));
+}
+
+.banner-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    margin: 0 0 24px;
+    color: #ffffff;
+    text-transform: none;
+    letter-spacing: -1px;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.75), 0 1px 3px rgba(0, 0, 0, 0.9);
+    transition: color 0.5s ease;
+}
+
+.banner-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    max-width: 850px;
+    margin: 0 auto;
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    line-height: 1.45;
+    color: #f8edf3;
+    font-weight: 500;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+    transition: color 0.5s ease;
+}
+
+.banner-description {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 50px;
+    color: var(--text-muted);
+    transition: color 0.5s ease;
+}
+
+.banner-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.banner-feature {
+    background: var(--bg-card);
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid var(--border-card);
+    transition: transform 0.3s ease, background-color 0.5s ease, border-color 0.5s ease;
+}
+
+.banner-feature:hover {
+    transform: translateY(-5px);
+}
+
+.banner-feature h3 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    color: var(--text-title);
+    transition: color 0.5s ease;
+}
+
+.banner-feature p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    transition: color 0.5s ease;
+}
+
+@media (max-width: 768px) {
+    .banner-hero {
+        padding: 50px 20px;
+    }
+    
+    .banner-logo {
+        max-width: 300px;
+    }
+    
+    .banner-title {
+        font-size: 2.5rem;
+    }
+    
+    .banner-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .banner-features {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hero h1 { font-size: 3rem; margin-bottom: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+.hero p { font-size: 1.2rem; opacity: 0.9; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+
+.hero-logo {
+    max-width: 180px;
+    height: auto;
+    margin-bottom: 20px;
+    display: inline-block;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+.topics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.card {
+    background: var(--bg-card);
+    padding: 40px;
+    border-radius: 16px;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid var(--border-card);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    animation: glow-pulse 2s infinite alternate;
+    transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.5s ease, box-shadow 0.3s ease;
+}
+
+.card-content {
+    flex: 1;
+}
+
+.card h3 { 
+    font-size: 1.8rem; 
+    color: var(--text-title); 
+    margin-bottom: 15px; 
+    transition: color 0.5s ease; 
+}
+
+.card h3.section-title {
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+}
+
+.card h3.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    border-radius: 4px;
+}
+
+.title-accent {
+    transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+
+.title-voices .title-accent {
+    color: #d6a64f;
+    text-shadow: 0 2px 12px rgba(214, 166, 79, 0.24);
+}
+
+.card h3.section-title.title-voices::after {
+    width: 175px;
+    background: linear-gradient(90deg, #d6a64f, rgba(214, 166, 79, 0.18));
+}
+
+.title-stories .title-accent {
+    color: #b48ae8;
+    text-shadow: 0 2px 12px rgba(180, 138, 232, 0.24);
+}
+
+.card h3.section-title.title-stories::after {
+    width: 220px;
+    background: linear-gradient(90deg, #b48ae8, rgba(180, 138, 232, 0.12));
+}
+
+.title-stereotypes .title-accent {
+    color: #f04b5f;
+    text-shadow: 0 2px 12px rgba(240, 75, 95, 0.24);
+}
+
+.card h3.section-title.title-stereotypes::after {
+    width: 220px;
+    height: 4px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #f04b5f, rgba(240, 75, 95, 0.18));
+}
+
+.title-help .title-accent {
+    color: #53c5a5;
+    text-shadow: 0 2px 12px rgba(83, 197, 165, 0.22);
+}
+
+.card h3.section-title.title-help::after {
+    width: 185px;
+    background: repeating-linear-gradient(90deg, #53c5a5 0 14px, transparent 14px 19px);
+}
+
+.card h3.section-title.code-red-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.25em;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    text-transform: uppercase;
+}
+
+.code-red-highlight {
+    color: #e60026;
+    text-shadow: 0 3px 14px rgba(230, 0, 38, 0.22);
+}
+
+.card h3.section-title.code-red-title::after {
+    width: 220px;
+    background: linear-gradient(90deg, #e60026, rgba(230, 0, 38, 0.25));
+}
+
+[data-theme="light"] .title-voices .title-accent {
+    color: #96650e;
+}
+
+[data-theme="light"] .title-stories .title-accent {
+    color: #7541a8;
+}
+
+[data-theme="light"] .title-stereotypes .title-accent {
+    color: #c6283e;
+}
+
+[data-theme="light"] .title-help .title-accent {
+    color: #14785f;
+}
+
+.card p { 
+    font-size: 1.1rem; 
+    color: var(--text-muted); 
+    margin-bottom: 25px; 
+    transition: color 0.5s ease; 
+}
+
+.read-more { 
+    color: var(--accent-color); 
+    font-weight: 800; 
+    font-size: 1rem; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    position: relative;
+    display: inline-block;
+    padding-bottom: 2px;
+}
+
+/* Crea la linea nascosta sotto il testo */
+.read-more::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width 0.4s ease; /* Animazione fluida */
+}
+
+/* Quando passi sulla card, la linea si allunga */
+.card:hover .read-more::after {
+    width: 100%;
+}
+
+.card-image {
+    width: 390px;
+    height: 285px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 0;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    /* Aggiunta la transizione per lo zoom */
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.code-red-image {
+    width: 390px;
+    height: 285px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Quando passi sopra la CARD, l'immagine al suo interno zooma */
+.card:hover .card-image {
+    transform: scale(1.05);
+}
+
+.card:hover .code-red-image {
+    transform: scale(1.05);
+}
+
+.card:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 30px var(--accent-glow), inset 0 0 15px var(--accent-glow-inset) !important;
+    animation: none;
+    /* transform: translateY(-8px); Rimosso perché ora lo fa il 3D! */
+}
+
+@keyframes glow-pulse {
+    0% {
+        box-shadow: 0 0 5px rgba(230, 0, 38, 0.2), inset 0 0 2px rgba(230, 0, 38, 0.05);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(230, 0, 38, 0.6), inset 0 0 5px rgba(230, 0, 38, 0.2);
+    }
+}
+
+@keyframes heroTextReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+.hero-title-animate {
+    /* Il browser userà questa animazione per sovrascrivere lo stile in linea dell'HTML */
+    animation: heroTextReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 0.6s;
+}
+
+.hero-p-animate {
+    animation: heroTextReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 0.9s; /* Appare poco dopo */
+}
+
+/* Classe per il Titolo Principale (Veloce) */
+.hero-title-animate {
+    opacity: 0; /* Parte invisibile */
+    animation: heroTextReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 0.6s; /* Aspetta che finisca la transizione di pagina */
+}
+
+/* Classe per il Sottotitolo (Leggermente ritardato per effetto stagger) */
+.hero-p-animate {
+    opacity: 0; /* Parte invisibile */
+    animation: heroTextReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 0.9s; /* Appare poco dopo il titolo */
+}
+
+.subpage-nav {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    
+    /* Spazio interno alla barra */
+    padding: 15px 40px; 
+    
+    /* Allinea gli elementi (Home a sinistra, eventuale titolo a destra) */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* Effetto Vetro SFOCATO (Default Scuro) */
+    background: rgba(20, 10, 15, 0.75); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    /* Bordino inferiore sottile bordeaux e ombra */
+    border-bottom: 1px solid rgba(141, 19, 36, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    
+    /* FONDAMENTALE: Fa rimanere la barra SOPRA a tutto il resto (anche alle card 3D) */
+    z-index: 9999; 
+    transition: background 0.3s ease;
+}
+
+/* Gestione della barra fissa per il TEMA CHIARO */
+[data-theme="light"] .subpage-nav {
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Stile per un eventuale titolo dentro la barra */
+.nav-page-title {
+    font-family: Verdana, sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: var(--accent-color);
+    text-transform: uppercase;
+}
+
+.back-btn { text-decoration: none; color: var(--accent-color); font-weight: 600; transition: color 0.3s; }
+.back-btn:hover { color: var(--text-title); }
+
+.subpage-content article { 
+    max-width: 800px; 
+    margin: 40px auto; 
+    background: var(--bg-card); 
+    padding: 40px; 
+    border-radius: 12px; 
+    border: 1px solid var(--border-card);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+.subpage-content h1 { color: var(--text-title); font-size: 2.5rem; margin-bottom: 10px; transition: color 0.5s ease; }
+.subtitle { font-size: 1.1rem; font-style: italic; color: var(--text-muted); margin-bottom: 20px; transition: color 0.5s ease; }
+blockquote { border-left: 4px solid var(--accent-color); padding-left: 20px; font-style: italic; margin: 30px 0; color: var(--text-main); font-size: 1.2rem; background: var(--accent-glow); padding: 20px; border-radius: 0 8px 8px 0; transition: border-color 0.5s ease, background-color 0.5s ease, color 0.5s ease; }
+hr { border: 0; height: 1px; background: var(--border-card); margin: 20px 0; transition: background-color 0.5s ease; }
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(10px); /* Parte sfocato */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out, filter 0.8s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0); /* Diventa nitido */
+}
+.theme-toggle-btn {
+    position: fixed;
+    top: 50px;        
+    right: 30px;      
+    z-index: 10000;   
+    background: rgba(45, 156, 219, 0.9);
+    border: 2px solid var(--accent-color);
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(45, 156, 219, 0.4);
+    transition: transform 0.3s ease, background-color 0.5s ease, border-color 0.5s ease;
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.15);
+    background: rgba(45, 156, 219, 1);
+    box-shadow: 0 6px 20px rgba(45, 156, 219, 0.6);
+}
+
+/* ==========================================================================
+   BARRA SOCIAL MEDIA
+   ========================================================================== */
+.social-bar {
+    position: fixed;
+    top: 20px;
+    left: 30px;
+    display: flex;
+    gap: 15px;
+    z-index: 10001;
+    align-items: center;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(45, 156, 219, 0.85);
+    border: 2px solid var(--accent-color);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(45, 156, 219, 0.3);
+}
+
+.social-link:hover {
+    background: rgba(45, 156, 219, 1);
+    transform: scale(1.2) translateY(-3px);
+    box-shadow: 0 6px 20px rgba(45, 156, 219, 0.5);
+}
+
+.social-link i {
+    font-size: 1.1rem;
+}
+
+/* Adattamento per tema chiaro */
+[data-theme="light"] .social-link {
+    background: rgba(139, 30, 47, 0.85);
+    border-color: var(--accent-color);
+    box-shadow: 0 4px 12px rgba(139, 30, 47, 0.3);
+}
+
+[data-theme="light"] .social-link:hover {
+    background: rgba(139, 30, 47, 1);
+    box-shadow: 0 6px 20px rgba(139, 30, 47, 0.5);
+}
+
+/* ==========================================================================
+   FEATURE CARDS - Mappatura, Logistica Smart, Distribuzione
+   ========================================================================== */
+.feature-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(45, 156, 219, 0.2) 0%, rgba(39, 174, 96, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    border-radius: 20px;
+}
+
+.feature-card:hover {
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 25px 50px rgba(45, 156, 219, 0.4), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: var(--accent-color);
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+.feature-card h3 {
+    position: relative;
+    z-index: 1;
+    transition: all 0.4s ease;
+}
+
+.feature-card:hover h3 {
+    color: var(--accent-color);
+    text-shadow: 0 0 20px rgba(45, 156, 219, 0.3);
+    transform: scale(1.1);
+}
+
+.feature-card p {
+    position: relative;
+    z-index: 1;
+    transition: all 0.4s ease;
+}
+
+.feature-card:hover p {
+    color: var(--text-title);
+    font-weight: 500;
+}
+
+/* Animazione di ingresso per le feature cards */
+.feature-card {
+    animation: slideInUp 0.6s ease-out forwards;
+}
+
+.feature-card:nth-child(1) { animation-delay: 0.1s; }
+.feature-card:nth-child(2) { animation-delay: 0.2s; }
+.feature-card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.icon-sun { display: block !important; }
+.icon-moon { display: none !important; }
+
+/* STATO IN MODALITÀ CHIARA: Nasconde il sole e mostra la luna per tornare notte */
+[data-theme="light"] .icon-sun { display: none !important; }
+[data-theme="light"] .icon-moon { display: block !important; }
+
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column-reverse;
+        padding: 24px;
+        gap: 24px;
+    }
+    .card-image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 390 / 285;
+    }
+    .code-red-image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 390 / 285;
+    }
+}
+/* Copertura per la transizione di pagina */
+.page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-principal);
+    z-index: 9999;
+    pointer-events: none; /* Non blocca i clic quando è invisibile */
+    opacity: 1; /* Parte coprendo la pagina all'avvio */
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Classe che si attiva quando usciamo dalla pagina */
+.page-transition-overlay.is-exiting {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Animazione di ingresso per il corpo della nuova pagina */
+body {
+    animation: fadeInPage 0.6s ease-in-out forwards;
+}
+
+@keyframes fadeInPage {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ==========================================================================
+   LAYOUT SPLIT & EFFETTO GLASS (Per le pagine interne)
+   ========================================================================== */
+
+/* Contenitore a due colonne */
+.split-container {
+    display: flex;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    align-items: stretch;
+}
+
+/* Colonna Testo: Effetto Trasparenza Glassmorphism (Default Scuro) */
+.text-column-glass {
+    flex: 1;
+    background: rgba(25, 10, 15, 0.55); /* Sfondo scuro trasparente */
+    backdrop-filter: blur(16px);        /* Sfocatura stile iOS */
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(141, 19, 36, 0.3); /* Bordino bordeaux */
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.text-column-glass p {
+    color: #e0e0e0;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+/* Adattamento Effetto Vetro per il TEMA CHIARO */
+[data-theme="light"] .text-column-glass {
+    background: rgba(255, 255, 255, 0.65); /* Vetro bianco trasparente */
+    border: 1px solid rgba(141, 19, 36, 0.15);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .text-column-glass p {
+    color: #2d2d2d; /* Testo scuro per leggere al sole */
+}
+
+/* ==========================================================================
+   SLIDER IMMAGINI (CAROSELLO)
+   ========================================================================== */
+.slider-column {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.image-slider {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.slider-track {
+    display: flex;
+    width: 300%; /* Spazio per 3 immagini */
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.slide {
+    width: 33.333%;
+    height: 100%;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Frecce del Carosello */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(141, 19, 36, 0.7);
+    backdrop-filter: blur(5px);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    padding: 12px 18px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.slider-btn:hover {
+    background: #8d1324;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev-btn { left: 15px; }
+.next-btn { right: 15px; }
+
+/* Responsive: sui telefoni va tutto a una colonna */
+@media (max-width: 900px) {
+    .split-container {
+        flex-direction: column;
+    }
+    .image-slider {
+        height: 300px;
+    }
+}
+
+/* Effetto Cinema: da leggermente scura/desaturata a vivida e attiva */
+.subpage-content section div div img {
+    filter: brightness(0.7) grayscale(0.2);
+    transition: filter 0.4s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.subpage-content section div div:hover img {
+    filter: brightness(1) grayscale(0); /* Torna perfettamente colorata e luminosa */
+    transform: scale(1.05) rotate(1deg); /* Si inclina di 1 grado per dare dinamismo */
+}
+
+/* ==========================================================================
+   SBLOCCO DEI NUOVI LAYOUT PER LE PAGINE INTERNE
+   ========================================================================== */
+
+/* 1. PAGINA PIRTOLI (Mosaico in alto, testo sotto) */
+.subpage-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Forziamo il contenitore a tutta larghezza per il testo sotto il mosaico */
+.subpage-content > section {
+    width: 100%;
+    clear: both;
+}
+
+/* Animazione Hover per il Mosaico di Pirtoli */
+.subpage-content section div div img {
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.subpage-content section div div:hover img {
+    transform: scale(1.05);
+}
+.subpage-content section div div {
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+.subpage-content section div div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(141, 19, 36, 0.35);
+    border-color: rgba(141, 19, 36, 0.6) !important;
+}
+
+
+/* 2. PAGINA ECOMAFIA (Griglia a 3 Card) */
+/* Riannulliamo il flex della colonna vetro standard solo dove serve una griglia */
+@media (min-width: 901px) {
+    .eco-card.text-column-glass {
+        flex: none !important; /* Impedisce che si allarghi come la colonna di Borsellino */
+        width: 100%;
+    }
+}
+
+
+/* 3. PAGINA PORTO SELVAGGIO (Layout Giornalistico a 2 colonne di testo) */
+.text-column-glass div h2, 
+.text-column-glass div h3 {
+    margin-top: 0;
+}
+
+
+/* 4. PAGINA BENI CULTURALI (Asimmetrico Editoriale) */
+/* Regola per evitare che la sezione foto collassi o si comporti come lo slider standard */
+.art-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.art-img-box:hover img {
+    transform: scale(1.03);
+}
+
+
+/* ==========================================================================
+   RESPONSIVE GENERALE (Sui telefoni va tutto in colonna singola)
+   ========================================================================== */
+@media (max-width: 900px) {
+    .subpage-content style, 
+    .text-column-glass[style*="display: grid"], 
+    div[style*="display: grid"] {
+        grid-template-columns: 1fr !important; /* Forza la colonna singola sui telefoni */
+    }
+    
+    .split-container {
+        flex-direction: column !important;
+    }
+    
+    .art-img-box {
+        width: 100% !important;
+        height: 250px !important;
+    }
+}
